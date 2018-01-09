@@ -6,6 +6,7 @@
 package sn.sonatel.formation.junit;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import sn.sonatel.formation.junit.impl.PromoCalculatorServiceImpl;
 import sn.sonatel.formation.junit.interfaces.PromoCalculatorService;
@@ -18,20 +19,19 @@ public class PromoBusinessTest {
 
     static PromoCalculatorService promotionBusinessInterface;
 
-    public static void instance() {
+    @Before
+    public void instance() {
         promotionBusinessInterface = new PromoCalculatorServiceImpl();
     }
 
     @Test
-    public void testPromoByCategorie() {
+    public void testPromoByCategorieEtProduitNull() {
+        Assert.assertTrue("Le nom du produit est vide ou bien le prix est égal à zéro", promotionBusinessInterface.calculerRemisePromotionByCategory(null, 0) == 0);
+    }
 
-        if (promotionBusinessInterface.calculerRemisePromotionByCategory("", 0) == 0) {
-            Assert.assertTrue("Le nom du produit est vide ou bien le prix est égal à zéro", promotionBusinessInterface.calculerRemisePromotionByCategory("", 0) == 0);
-        }
-
-        if (promotionBusinessInterface.calculerRemisePromotionByCategory("", 600) == 0) {
-            Assert.fail("Le nom du produit est vide ou bien le prix est égal à zéro");
-        }
+    @Test
+    public void testPromoByCategorieVide() {
+        Assert.assertTrue("Le nom du produit est vide ou bien le prix est égal à zéro", promotionBusinessInterface.calculerRemisePromotionByCategory("", 600) == 0);
     }
 
 }
